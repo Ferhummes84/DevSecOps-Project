@@ -118,6 +118,13 @@ pipeline {
 
     post {
         always {
+            emailext(
+                subject: "${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} terminou com status ${currentBuild.currentResult}.\nDetalhes: ${env.BUILD_URL}",
+                to: 'ferhummes84@gmail.com',
+                attachLog: true,
+                attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
+            )
             archiveArtifacts artifacts: 'trivyfs.txt,trivyimage.txt', allowEmptyArchive: true
             sh 'docker image prune -f || true'
             cleanWs()
