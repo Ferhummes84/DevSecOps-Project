@@ -121,7 +121,7 @@ pipeline {
             emailext(
                 subject: "${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                 body: "Pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER} terminou com status ${currentBuild.currentResult}.\nDetalhes: ${env.BUILD_URL}",
-                to: 'ferhummes84@gmail.com',
+                to: env.NOTIFY_EMAIL,
                 attachLog: true,
                 attachmentsPattern: 'trivyfs.txt,trivyimage.txt'
             )
